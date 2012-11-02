@@ -1,6 +1,6 @@
 HTML Purifier & Markdown Behavior for Yii
 ===
-Contains Markdown parser and HTML Purifier for Yii ActiveRecord models.
+Contains methods for Markdown parser and HTML Purifier for Yii ActiveRecord models.
 
 HTML Purifier and Markdown parser very powerfull, but very slow. We can use two fields in database (for sourse text and for processed text) and process content before saving of model.
 
@@ -78,7 +78,7 @@ Now we must use `purified_text` attribute in views:
 <?php echo $model->purified_text; ?>
 ~~~
 
-And it is return processed HTML text from database.
+And it returns processed HTML text from database.
 
 By default a behavior also automatically converts content and saves result to database by `onAfterFind` event if result field is empty. For experimentation with purifier options you can clean results in database and can add line `'updateOnAfterFind'=>false`. 
 
