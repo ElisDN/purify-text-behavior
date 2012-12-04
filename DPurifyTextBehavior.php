@@ -37,7 +37,7 @@ class DPurifyTextBehavior extends CActiveRecordBehavior
     /**
      * @var string destination attribute name for result
      */
-	public $destinationAttribute = 'purified_text';
+    public $destinationAttribute = 'purified_text';
 
     /**
      * @var bool use or not use the Markdown parser
@@ -69,40 +69,40 @@ class DPurifyTextBehavior extends CActiveRecordBehavior
      */
     public $updateOnAfterFind = true;
 
-	/**
-	* @param CModelEvent $event event parameter
-	*/
-	public function beforeSave($event)
+    /**
+     * @param CModelEvent $event event parameter
+     */
+    public function beforeSave($event)
     {
-        if ($this->processOnBeforeSave){
+        if ($this->processOnBeforeSave)
+        {
             $model = $this->getOwner();
-            if ($this->sourceAttribute && $this->destinationAttribute) {
-                $model->{$this->destinationAttribute} =
-                    $this->processContent($model->{$this->sourceAttribute});
-            }
+            if ($this->sourceAttribute && $this->destinationAttribute)
+                $model->{$this->destinationAttribute} = $this->processContent($model->{$this->sourceAttribute});
         }
-	}
+    }
 
     /**
      * @param CModelEvent $event event parameter
      */
     public function afterFind($event)
     {
-        if ($this->processOnAfterFind){
+        if ($this->processOnAfterFind)
+        {
             $model = $this->getOwner();
             if (
                 $this->sourceAttribute &&
                 $this->destinationAttribute &&
                 $model->{$this->sourceAttribute} &&
                 !$model->{$this->destinationAttribute}
-            ) {
-                $model->{$this->destinationAttribute} =
-                    $this->processContent($model->{$this->sourceAttribute});
+            )
+            {
+                $model->{$this->destinationAttribute} = $this->processContent($model->{$this->sourceAttribute});
                 if ($this->updateOnAfterFind)
                     $this->updateModel();
             }
         }
-	}
+    }
 
     protected function processContent($text)
     {
@@ -119,7 +119,8 @@ class DPurifyTextBehavior extends CActiveRecordBehavior
      * @param string $text
      * @return string
      */
-    public function markdownText($text) {
+    public function markdownText($text)
+    {
         $md = new CMarkdown;
         return $md->transform($text);
     }
