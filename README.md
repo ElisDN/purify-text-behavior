@@ -90,3 +90,12 @@ UPDATE `posts` SET `purified_text` = '';
 ~~~
 
 and all entries automatically updates by first `onAfterFind` event. 
+
+P.S. If you use Markdown, place string
+
+~~~
+[php]
+CTextHighlighter::registerCssFile();
+~~~
+
+in your view for enable syntax hightlighting.
