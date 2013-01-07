@@ -139,7 +139,7 @@ class DPurifyTextBehavior extends CActiveRecordBehavior
     protected function updateModel()
     {
         $model = $this->getOwner();
-        $model->updateByPk($model->id, array(
+        $model->updateByPk($model->getPrimaryKey(), array(
             $this->destinationAttribute => $model->{$this->destinationAttribute}
         ));
     }
