@@ -25,7 +25,7 @@
  *
  * @author ElisDN <mail@elisdn.ru>
  * @link http://www.elisdn.ru
- * @version 1.0
+ * @version 1.1
  */
 
 class DPurifyTextBehavior extends CActiveRecordBehavior
