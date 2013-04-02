@@ -122,7 +122,7 @@ class DPurifyTextBehavior extends CActiveRecordBehavior
      */
     public function markdownText($text)
     {
-        $md = new CMarkdown;
+        $md = new CMarkdownParser;
         return $md->transform($text);
     }
 
