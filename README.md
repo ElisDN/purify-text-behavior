@@ -2,9 +2,9 @@ HTML Purifier & Markdown Behavior for Yii
 ===
 Contains methods for Markdown parser and HTML Purifier for Yii ActiveRecord models.
 
-HTML Purifier and Markdown parser very powerfull, but very slow. We can use two fields in database (for sourse text and for processed text) and process content before saving of model.
+HTML Purifier and Markdown parser very powerfull, but very slow. We can use two fields in a database (for sourse text and for processed text) and process a content before saving of a model.
 
-This behavior parses content from sourse field to destination field automatically if destination field has empty value. By default a behavior purify content in `beforeSave()` and `afterFind()` events. 
+This behavior parses a content from a sourse field to a destination field automatically (if a destination field has empty value). By default a behavior processes content in the `beforeSave()` and `afterFind()` events. 
 
 Readme
 ---
@@ -19,7 +19,7 @@ Extract to `protected/components`. Create two fileds like `text` and `purified_t
 Usage example
 -------------
  
-Let's allow Flash-video insertions and allow attribute `rel="nofollow"` for links in our Blog posts (also we can activate Markdown Parser if needle):
+Let's allow insert Flash-video blocks and attribute `rel="nofollow"` for links in our Blog posts (also we can activate Markdown Parser if needle):
 
 ~~~
 [php]
@@ -71,25 +71,25 @@ class Comment extends CActiveRecord
 }
 ~~~
 
-Now we must use `purified_text` attribute in views:
+Now we must use the `purified_text` attribute in views:
 
 ~~~
 [php]
 <?php echo $model->purified_text; ?>
 ~~~
 
-And it returns processed HTML text from database.
+And it returns a processed HTML text from our database.
 
-By default a behavior also automatically converts content and saves result to database by `onAfterFind` event if result field is empty. For experimentation with purifier options you can clean results in database and can add line `'updateOnAfterFind'=>false`. 
+The behavior also automatically converts content and saves result to database by a `onAfterFind` event if result field is empty. For experiments with a purifier options you can clean results in a database and you can add line `'updateOnAfterFind'=>false`. 
 
-Also if you want regenerate all your processed content you can execute query
+Also if you want to regenerate all your processed texts you can execute query
 
 ~~~
 [sql]
 UPDATE `posts` SET `purified_text` = '';
 ~~~
 
-and all entries automatically updates by first `onAfterFind` event. 
+and all your entries will be updated automatically by the first `onAfterFind` event. 
 
 P.S. If you use Markdown, place string
 
@@ -98,4 +98,4 @@ P.S. If you use Markdown, place string
 CTextHighlighter::registerCssFile();
 ~~~
 
-in your view for enable syntax hightlighting.
+in your view for syntax hightlighting work.
