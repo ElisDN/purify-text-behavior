@@ -99,3 +99,14 @@ CTextHighlighter::registerCssFile();
 ~~~
 
 in your view for syntax hightlighting work.
+
+Changelog
+---------
+
+Version 1.2
+
+\+ Added a optional `<pre>` and `<code>` tags content encoding
+
+Version 1.1
+
+\- Removed a useless class wrapper
