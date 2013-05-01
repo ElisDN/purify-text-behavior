@@ -46,6 +46,11 @@ class DPurifyTextBehavior extends CActiveRecordBehavior
     public $enableMarkdown = false;
 
     /**
+     * @var bool use CHtml::encode instead of HTML Purifier for <pre> and <code> contents
+     */
+    public $encodePreContent = false;
+
+    /**
      * @var bool use or not use HTML Purifier
      */
     public $enablePurifier = true;
@@ -134,7 +139,22 @@ class DPurifyTextBehavior extends CActiveRecordBehavior
     {
         $p = new CHtmlPurifier;
         $p->options = $this->purifierOptions;
-        return $p->purify(trim($text));
+
+        if ($this->encodePreContent)
+        {
+            $text = preg_replace_callback('|<pre>(.*)</pre>|ismU', array($this, 'storePreContent'), $text);
+            $text = preg_replace_callback('|<code>(.*)</code>|ismU', array($this, 'storeCodeContent'), $text);
+        }
+
+        $text = $p->purify(trim($text));
+
+        if ($this->encodePreContent)
+        {
+            $text = preg_replace_callback('|<pre>(.*)</pre>|ismU', array($this, 'resumePreContent'), $text);
+            $text = preg_replace_callback('|<code>(.*)</code>|ismU', array($this, 'resumeCodeContent'), $text);
+        }
+
+        return $text;
     }
 
     protected function updateModel()
@@ -143,5 +163,44 @@ class DPurifyTextBehavior extends CActiveRecordBehavior
         $model->updateByPk($model->getPrimaryKey(), array(
             $this->destinationAttribute => $model->{$this->destinationAttribute}
         ));
+    }
+
+    private $_preContents = array();
+
+    private function storePreContent($matches)
+    {
+        return '<pre>' . $this->storeContent($matches) . '</pre>';
+    }
+
+    private function resumePreContent($matches)
+    {
+        return '<pre>' . $this->resumeContent($matches) . '</pre>';
+    }
+
+    private function storeCodeContent($matches)
+    {
+        return '<code>' . $this->storeContent($matches) . '</code>';
+    }
+
+    private function resumeCodeContent($matches)
+    {
+        return '<code>' . $this->resumeContent($matches) . '</code>';
+    }
+
+    private function storeContent($matches)
+    {
+        $content = $matches[1];
+        do {
+            $id = md5(rand(0, 100000));
+        } while (isset($this->_preContents[$id]));
+        $this->_preContents[$id] = $content;
+        return $id;
+    }
+
+    private  function resumeContent($matches)
+    {
+        $id = $matches[1];
+        $content = isset($this->_preContents[$id]) ? CHtml::encode($this->_preContents[$id]) : '';
+        return $content;
     }
 }
