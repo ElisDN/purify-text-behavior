@@ -103,6 +103,10 @@ in your view for syntax hightlighting work.
 Changelog
 ---------
 
+Version 1.3
+
+\+ Added hash store for skiping if processing is not needle
+
 Version 1.2
 
 \+ Added a optional `<pre>` and `<code>` tags content encoding
